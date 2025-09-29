@@ -45,4 +45,13 @@ jQuery(document).ready(function () {
         $('#errorMessage').text(message);
         setTimeout(() => $('#errorMessage').text(''), 3000);
     }
+    $('#sortByName').click(function () {
+        pairs.sort((a, b) => a.name.localeCompare(b.name));
+        updateBox();
+    });
+
+    $('#sortByValue').click(function () {
+        pairs.sort((a, b) => a.value.localeCompare(b.value));
+        updateBox();
+    });
 })

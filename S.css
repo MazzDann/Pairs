@@ -12,12 +12,10 @@ body {
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
-
 h1 {
     text-align: center;
     color: #333;
 }
-
 .input-section {
     display: flex;
     gap: 10px;
@@ -30,7 +28,6 @@ h1 {
     border: 1px solid #ccc;
     border-radius: 4px;
 }
-
 #addButton {
     padding: 10px 20px;
     background-color: #28a745;
@@ -39,7 +36,6 @@ h1 {
     border-radius: 4px;
     cursor: pointer;
 }
-
 #addButton:hover {
     background-color: #218838;
 }
@@ -47,23 +43,19 @@ h1 {
     background-color: #dc3545;
     color: white;
 }
-
 #deleteSelected:hover {
     background-color: #c82333;
 }
-
 .error {
     color: red;
     min-height: 20px;
     margin-bottom: 10px;
 }
-
 s {
     display: flex;
     gap: 10px;
     margin-bottom: 10px;
 }
-
 .controls button {
     padding: 10px 20px;
     border: none;
@@ -71,11 +63,31 @@ s {
     cursor: pointer;
     font-size: 14px;
 }
-
 #pairList {
     width: 100%;
     padding: 10px;
     font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 4px;
+}
+#showXml {
+    background-color: #6f42c1;
+    color: white;
+}
+#showXml:hover {
+    background-color: #5a32a3;
+}
+#sortByName {
+    background-color: #007bff;
+    color: white;
+}
+#sortByName:hover {
+    background-color: #0056b3;
+}
+#sortByValue {
+    background-color: #17a2b8;
+    color: white;
+}
+#sortByValue:hover {
+    background-color: #117a8b;
 }
