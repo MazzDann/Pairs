@@ -62,4 +62,9 @@ jQuery(document).ready(function () {
         xml += '</pairs>';
         $('#xmlOutput').text(xml);
     });
+    $('#pairInput').keypress(function (e) {
+        if (e.which === 13) {
+            $('#addButton').click();
+        }
+    });
 })

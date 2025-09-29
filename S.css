@@ -100,3 +100,9 @@ s {
     white-space: pre-wrap;
     font-family: monospace;
 }
+
+
+.content-section {
+    display: flex;
+    gap: 20px;
+}
