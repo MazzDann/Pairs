@@ -43,6 +43,14 @@ h1 {
 #addButton:hover {
     background-color: #218838;
 }
+#deleteSelected {
+    background-color: #dc3545;
+    color: white;
+}
+
+#deleteSelected:hover {
+    background-color: #c82333;
+}
 
 .error {
     color: red;

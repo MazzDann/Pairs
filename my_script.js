@@ -31,6 +31,15 @@ jQuery(document).ready(function () {
             showError('Invalid format. Use: name=value (alphanumeric only).');
         }
     });
+    $('#deleteSelected').click(function () {
+        const selected = $('#pairList option:selected').map(function () {
+            return parseInt($(this).val());
+        }).get();
+        selected.sort((a, b) => b - a).forEach(index => {
+            pairs.splice(index, 1);
+        });
+        updateBox();
+    });
 
     function showError(message) {
         $('#errorMessage').text(message);
