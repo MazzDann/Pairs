@@ -64,19 +64,74 @@ jQuery(document).ready(function () {
         pairs.sort((a, b) => a.value.localeCompare(b.value));
         updateBox();
     });
-    // Show as XML button click handler
-    $('#showXml').click(function () {
+
+
+        // Generate XML string
+    function generateXml() {
         let xml = '<?xml version="1.0" encoding="UTF-8"?>\n<pairs>\n';
         pairs.forEach(pair => {
             xml += `  <pair>\n    <name>${pair.name}</name>\n    <value>${pair.value}</value>\n  </pair>\n`;
         });
         xml += '</pairs>';
-        $('#xmlOutput').text(xml);
+        return xml;
+    }
+
+    // Show as XML button click handler
+    $('#showXml').click(function () {
+        const xml = generateXml();
+        const $xmlOutput = $('#xmlOutput');
+        $xmlOutput.text(xml).css('display', 'block');
     });
     // Allow Enter key to add pair
     $('#pairInput').keypress(function (e) {
         if (e.which === 13) {
             $('#addButton').click();
         }
+    });
+    
+    // Download XML button click handler
+    $('#downloadXml').click(function () {
+        if (pairs.length === 0) {
+            showError('No pairs to download as XML.');
+            return;
+        }
+        const xml = generateXml();
+        const blob = new Blob([xml], { type: 'application/xml' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'pairs.xml';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    });
+
+    // Upload XML button click handler
+    $('#uploadXml').click(function () {
+        $('#xmlFileInput').click();
+    });
+
+    // Handle file upload
+    $('#xmlFileInput').change(function (event) {
+        const file = event.target.files[0];
+        if (!file) {
+            showError('No file selected.');
+            return;
+        }
+        if (!file.name.endsWith('.xml')) {
+            showError('Please select an XML file.');
+            return;
+        }
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            showError('Yeppi')
+            // Clear file input
+            $('#xmlFileInput').val('');
+        };
+        reader.onerror = function () {
+            showError('Error reading file.');
+        };
+        reader.readAsText(file);
     });
 })
