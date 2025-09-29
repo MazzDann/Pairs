@@ -11,6 +11,7 @@
 <body>
     <div class="container">
         <h1>Name/Value Pair Manager</h1>
+        <div class="error" id="errorMessage"></div>
         <div class="input-section">
             <input type="text" id="pairInput" placeholder="Enter name=value (e.g., color=blue)">
         </div>
@@ -21,8 +22,8 @@
             <button id="sortByValue">Sort by Value</button>
             <button id="showXml">Show as XML</button>
         </div>
-        <div class="error" id="errorMessage"></div>
         <select multiple id="pairList" size="10" ></select>
+        <div class="xml-output" id="xmlOutput"></div>
     </div>
 </body>
 </html>

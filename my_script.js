@@ -54,4 +54,12 @@ jQuery(document).ready(function () {
         pairs.sort((a, b) => a.value.localeCompare(b.value));
         updateBox();
     });
+    $('#showXml').click(function () {
+        let xml = '<?xml version="1.0" encoding="UTF-8"?>\n<pairs>\n';
+        pairs.forEach(pair => {
+            xml += `  <pair>\n    <name>${pair.name}</name>\n    <value>${pair.value}</value>\n  </pair>\n`;
+        });
+        xml += '</pairs>';
+        $('#xmlOutput').text(xml);
+    });
 })
