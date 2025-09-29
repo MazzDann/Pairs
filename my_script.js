@@ -1,7 +1,7 @@
 jQuery(document).ready(function () {
-    let pairs=[]
+    let pairs = []
     // Validate name/value pair input
-    function validate(input){
+    function validate(input) {
         // Regular expression: alphanumeric name, optional spaces, =, optional spaces, alphanumeric value
         const regex = /^[a-zA-Z0-9]+(\s*)=(\s*)[a-zA-Z0-9]+$/;
         return regex.test(input);
@@ -66,7 +66,7 @@ jQuery(document).ready(function () {
     });
 
 
-        // Generate XML string
+    // Generate XML string
     function generateXml() {
         let xml = '<?xml version="1.0" encoding="UTF-8"?>\n<pairs>\n';
         pairs.forEach(pair => {
@@ -78,6 +78,10 @@ jQuery(document).ready(function () {
 
     // Show as XML button click handler
     $('#showXml').click(function () {
+        if (pairs.length === 0) {
+            showError('No pairs to display as XML.');
+            return;
+        }
         const xml = generateXml();
         const $xmlOutput = $('#xmlOutput');
         $xmlOutput.text(xml).css('display', 'block');
@@ -88,7 +92,7 @@ jQuery(document).ready(function () {
             $('#addButton').click();
         }
     });
-    
+
     // Download XML button click handler
     $('#downloadXml').click(function () {
         if (pairs.length === 0) {
@@ -126,6 +130,37 @@ jQuery(document).ready(function () {
         const reader = new FileReader();
         reader.onload = function (e) {
             showError('Yeppi')
+
+            const xmlText = e.target.result;
+            try {
+                const parser = new DOMParser();
+                const xmlDoc = parser.parseFromString(xmlText, 'application/xml');
+                if (xmlDoc.getElementsByTagName('parsererror').length > 0) {
+                    throw new Error('Invalid XML format.');
+                }
+                const pairNodes = xmlDoc.getElementsByTagName('pair');
+                const newPairs = [];
+                for (let i = 0; i < pairNodes.length; i++) {
+                    const nameNode = pairNodes[i].getElementsByTagName('name')[0];
+                    const valueNode = pairNodes[i].getElementsByTagName('value')[0];
+                    if (!nameNode || !valueNode) {
+                        throw new Error('Missing name or value in pair at index ' + i);
+                    }
+                    const name = nameNode.textContent;
+                    const value = valueNode.textContent;
+                    if (name && value && /^[a-zA-Z0-9]+$/.test(name) && /^[a-zA-Z0-9]+$/.test(value)) {
+                        newPairs.push({ name, value });
+                    } else {
+                        throw new Error('Invalid pair at index ' + i + ': ' + (name || 'undefined') + '=' + (value || 'undefined'));
+                    }
+                }
+                pairs = newPairs; // Replace existing pairs
+                updateBox();
+                $('#xmlOutput').text('').css('display', 'none'); // Hide XML output
+                showError('XML file loaded successfully.');
+            } catch (error) {
+                showError('Error parsing XML file: ' + error.message);
+            }
             // Clear file input
             $('#xmlFileInput').val('');
         };
